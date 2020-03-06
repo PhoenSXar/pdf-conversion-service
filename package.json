@@ -1,0 +1,27 @@
+{
+  "name": "pdf-conversion-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "electron src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhoenSXar/pdf-conversion-service.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhoenSXar/pdf-conversion-service/issues"
+  },
+  "homepage": "https://github.com/PhoenSXar/pdf-conversion-service#readme",
+  "dependencies": {
+    "@koa/router": "^8.0.8",
+    "electron-pdf": "^7.0.0",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1"
+  }
+}
