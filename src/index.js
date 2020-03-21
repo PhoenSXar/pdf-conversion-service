@@ -9,17 +9,13 @@ const config = require('../config.json');
 
 const exporter = new ElectronPDF();
 
-const tempDir = path.resolve('pdf');
-
 const jobOptions = {
 	inMemory: false
 };
 
 function getTempPath() {
-	return path.join(tempDir, `${Date.now()}.pdf`);
+	return path.resolve(`${Date.now()}.pdf`);
 }
-
-//TODO clean temp
 
 const app = new Koa();
 
@@ -30,13 +26,17 @@ app.use(new Router().post(config.url, async ctx => {
 	const options = normalize.options(body.options);
 	const job = await exporter.createJob(source, getTempPath(), options, jobOptions);
 	
-	const result = new Promise((resolve, reject) => {
+	const resultPath = await new Promise((resolve, reject) => {
 		job.on('job-complete', r => resolve(r.results[0]));
 
 		job.render();
 	});
 
-	ctx.body = fs.createReadStream(await result);
+	const result = fs.createReadStream(resultPath);
+
+	result.on('close', () => fs.unlink(resultPath));
+
+	ctx.body = result;
 }).routes());
 
 exporter.on('charged', () => {
