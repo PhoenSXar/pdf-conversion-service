@@ -34,7 +34,7 @@ app.use(new Router().post(config.url, async ctx => {
 
 	const result = fs.createReadStream(resultPath);
 
-	result.on('close', () => fs.unlink(resultPath));
+	result.on('close', () => fs.unlink(resultPath, () => {}));
 
 	ctx.body = result;
 }).routes());
